@@ -33,6 +33,10 @@ export default function App() {
       });
   };
 
+  const openRecipeUrl = (url) => {
+    window.open(url, '_blank');
+  };
+
   return (
     <div>
       <h2>Recipe Finder</h2>
@@ -64,8 +68,8 @@ export default function App() {
                   <li key={ingredient.food}>{ingredient.text}</li>
                 ))}
               </ul>
-              <h4>Full Recipe:</h4>
-              <p>{recipe.recipe.url}</p>
+              
+              <button onClick={() => openRecipeUrl(recipe.recipe.url)}>Get Instructions</button>
             </div>
           ))}
         </div>
