@@ -20,16 +20,20 @@ export default function RecommendedPicks() {
   
 
     return (
-        <div className="recommended">
-            <h4>Try some of our most popular recipes</h4>
-            {recommended.map((recipe) => {
-                return (
-                    <div key={recipe.recipe.url} className="recommended--card">
-                        <h4 className="recommended--card-label">{recipe.recipe.label}</h4>
-                        <img src={recipe.recipe.image} className="recommended--card-image" alt="recipe-image"/>
-                    </div>
-                );
-            })}
+        <div>
+            <p className="recommended--title">Try some of our most popular recipes</p>
+            <div className="recommended">
+                {recommended.map((recipe) => {
+                    return (
+                        <div key={recipe.recipe.url} className="recommended--card">
+                            <img src={recipe.recipe.image} className="recommended--card-image" alt="recipe-image" />
+                            <div className="recommended--card-label-card">
+                                <h4 className="recommended--card-label">{recipe.recipe.label}</h4>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     )
     
