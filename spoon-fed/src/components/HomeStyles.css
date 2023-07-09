@@ -1,0 +1,46 @@
+:root {
+  --orange: #FF9F1C;
+  --night-black: #0C0C0C;
+  --ice-white: #F4FAFF;
+}
+
+.home--body {
+  color: var(--night-black);
+  font-family: 'Raleway', sans-serif;
+}
+
+.home--search-input {
+  border-radius: 50px  ;
+}
+
+.recommended {
+  background-color: antiquewhite;
+}
+
+.recommended--card {
+    background-color: var(--orange);
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25rem;
+    height: 100%;
+    border-radius: 1rem;
+  }
+
+.recommended--card-image {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 1rem;
+}
+
+.recommended--card-label-card {
+  background-color: var(--ice-white);
+  width: 100%;
+  border-radius: 0rem 0rem 1rem 1rem;
+}
+
+#outlined-basic {
+  border-radius: 20px;
+}
