@@ -9,25 +9,39 @@
   font-family: 'Raleway', sans-serif;
 }
 
-.home--search-input {
-  border-radius: 50px  ;
+#outlined-basic {
+  border-color: var(--orange);
+  border-radius: 5px;
 }
 
 .recommended {
   background-color: antiquewhite;
+  display: flex;
+  overflow-x: auto;
+}
+
+.recommended::-webkit-scrollbar {
+  width: 0;
+}
+
+.recommended--title {
+  color: #FF9F1C;
+  font-weight: 500;
+  font-size: 1.5rem;
 }
 
 .recommended--card {
-    background-color: var(--orange);
-    padding: 10px;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 25rem;
-    height: 100%;
-    border-radius: 1rem;
-  }
+  background-color: var(--orange);
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 12rem;
+  height: 14rem;
+  border-radius: 1rem;
+  position: relative;
+}
 
 .recommended--card-image {
   width: 10rem;
@@ -36,11 +50,20 @@
 }
 
 .recommended--card-label-card {
-  background-color: var(--ice-white);
-  width: 100%;
-  border-radius: 0rem 0rem 1rem 1rem;
+  
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#outlined-basic {
-  border-radius: 20px;
+.recommended--card-label {
+  font-size: 0.9rem;
+  text-align: center;
 }
+
+
