@@ -1,5 +1,7 @@
 import React from "react";
 import HomeStyles from "./HomeStyles.css"
+import Mui from '@mui/material';
+
 
 export default function RecommendedPicks() {
 
@@ -27,9 +29,8 @@ export default function RecommendedPicks() {
                     return (
                         <div key={recipe.recipe.url} className="recommended--card">
                             <img src={recipe.recipe.image} className="recommended--card-image" alt="recipe-image" />
-                            <div className="recommended--card-label-card">
-                                <h4 className="recommended--card-label">{recipe.recipe.label}</h4>
-                            </div>
+                            <h4 className="recommended--card-label">{recipe.recipe.label}</h4>
+                            <Mui.Button>Try</Mui.Button>
                         </div>
                     );
                 })}
