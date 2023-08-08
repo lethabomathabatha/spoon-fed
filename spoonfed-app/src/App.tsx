@@ -14,6 +14,7 @@ type Recipe = {
       totalTime: number;
       source: string;
       yield: number;
+      cuisineType: string;
     }
  
 }
@@ -24,6 +25,7 @@ export default function App() {
   const [recipesData, setRecipesData] = useState<Recipe[]>([]) 
   // const [query, setQuery] = useState('')
   const [searchIngredients, setSearchIngredients] = useState('')
+  const [numOfResults, setNumOfResults] = useState(10)
   // const apiId = import.meta.env.VITE_API_ID
   // const apiKey = import.meta.env.VITE_API_KEY
 
@@ -35,7 +37,7 @@ export default function App() {
     setLoading(true);
     const searchQuery = `${searchIngredients}`
     fetch(
-      `https://api.edamam.com/search?q=${searchQuery}&app_id=${apiId}&app_key=${apiKey}`
+      `https://api.edamam.com/search?q=${searchQuery}&app_id=${apiId}&app_key=${apiKey}&from=0&to=${numOfResults}`
     ) 
       .then((res) =>{
         if (!res.ok) {
@@ -52,6 +54,14 @@ export default function App() {
         setLoading(false)
       })
   };
+
+  // load more recipes
+  function loadMore() {
+    setLoading(true)
+    setNumOfResults((prevResults => prevResults + 10))
+    handleSearch()
+    setLoading(false)
+  }
 
   // these work as expected
   // console.log(import.meta.env.VITE_API_KEY)
@@ -107,19 +117,24 @@ export default function App() {
                 <img src={recipe.recipe.image} alt={recipe.recipe.label} />
                 <h3>{recipe.recipe.label}</h3>
                 <h2>{recipe.recipe.source}</h2>
+                <h2>serves: {recipe.recipe.yield}</h2>
 
                 <h4>Ingredients:</h4>
                 <ul>
                   {recipe.recipe.ingredients.map((ingredient, index) => (
                     <li key={index}>{ingredient.text}</li>
                   ))}
-                  {recipe.recipe.totalTime === 0 ? (null) : (<p>{recipe.recipe.totalTime}min</p>)}
+                  {recipe.recipe.totalTime === 0 ? (null) 
+                    : 
+                  (<p>{recipe.recipe.totalTime}min </p>)}
                   
                 </ul>
 
                 <button onClick={() => getRecipeInstructions(recipe.recipe.url)}>Get Instructions</button>
               </div>
             ))}
+
+            <button onClick={loadMore}>Get More</button>
 
           </div>
         )}
