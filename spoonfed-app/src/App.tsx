@@ -23,14 +23,15 @@ export default function App() {
 
   const [loading, setLoading] = useState(false)
   const [recipesData, setRecipesData] = useState<Recipe[]>([]) 
-  // const [query, setQuery] = useState('')
   const [searchIngredients, setSearchIngredients] = useState('')
   const [numOfResults, setNumOfResults] = useState(10)
-  // const apiId = import.meta.env.VITE_API_ID
-  // const apiKey = import.meta.env.VITE_API_KEY
 
   const apiId = '9b922e44'
   const apiKey = 'ef7943312809a8647c2d59f53e28994f'
+  // const apiId = import.meta.env.VITE_API_ID
+  // const apiKey = import.meta.env.VITE_API_KEY
+
+  
   
   // handle search from api
   const handleSearch = () => {
@@ -39,43 +40,28 @@ export default function App() {
     fetch(
       `https://api.edamam.com/search?q=${searchQuery}&app_id=${apiId}&app_key=${apiKey}&from=0&to=${numOfResults}`
     ) 
-      .then((res) =>{
-        if (!res.ok) {
-          throw new Error(`Failed to fetch! status: ${res.status}`)
-        }
-        return res.json()
-      })
-      .then((data) => {
-        setRecipesData(data.hits);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log('Fetch Error:', error)
-        setLoading(false)
-      })
-  };
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Failed to fetch! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then((data) => {
+      setRecipesData(data.hits);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log('Fetch Error:', error);
+      setLoading(false);
+    });
+};
 
-  // load more recipes
-  function loadMore() {
-    setLoading(true)
-    setNumOfResults((prevResults => prevResults + 10))
-    handleSearch()
-    setLoading(false)
-  }
-
-  // these work as expected
-  // console.log(import.meta.env.VITE_API_KEY)
-  // console.log(import.meta.env.VITE_API_ID)
-
-  // handle get all recipes
-  // const handleGetAllRecipes = () => {
-  //   fetch('/api/recipe')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setRecipesData(data);
-  //     })
-  // }
-
+function loadMore() {
+  setLoading(true);
+  setNumOfResults((prevResults) => prevResults + 10);
+  handleSearch(); 
+  // setLoading(false);
+}
   // get full recipe instructions from recipe source website
   const getRecipeInstructions = (url: string) => {
     window.open(url, '_blank')
@@ -93,19 +79,12 @@ export default function App() {
           type="text"
           value={searchIngredients}
           onChange={(e) => setSearchIngredients(e.target.value)}
-          placeholder="Enter ingredients (comma-separated)"
+          placeholder="Enter ingredients"
         />
         
         <button onClick={handleSearch}>Search</button>
         <br />
-        {/* <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Find specific meal"
-        />
-        
-        <button onClick={handleGetAllRecipes}>Search</button> */}
+  
 
         {/* fetch and map through recipe data */}
         {loading ? (
@@ -126,7 +105,7 @@ export default function App() {
                   ))}
                   {recipe.recipe.totalTime === 0 ? (null) 
                     : 
-                  (<p>{recipe.recipe.totalTime}min </p>)}
+                  (<p>{recipe.recipe.totalTime}min</p>)}
                   
                 </ul>
 
@@ -134,7 +113,7 @@ export default function App() {
               </div>
             ))}
 
-            <button onClick={loadMore}>Get More</button>
+            <button onClick={loadMore}>Load More</button>
 
           </div>
         )}
