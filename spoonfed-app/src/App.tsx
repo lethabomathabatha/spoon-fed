@@ -23,14 +23,16 @@ export default function App() {
 
   const [loading, setLoading] = useState(false)
   const [recipesData, setRecipesData] = useState<Recipe[]>([]) 
-  // const [query, setQuery] = useState('')
+  const [randomRecipesData, setRandomRecipesData] = useState<Recipe[]>([])
   const [searchIngredients, setSearchIngredients] = useState('')
   const [numOfResults, setNumOfResults] = useState(10)
-  // const apiId = import.meta.env.VITE_API_ID
-  // const apiKey = import.meta.env.VITE_API_KEY
 
   const apiId = '9b922e44'
   const apiKey = 'ef7943312809a8647c2d59f53e28994f'
+  // const apiId = import.meta.env.VITE_API_ID
+  // const apiKey = import.meta.env.VITE_API_KEY
+
+  
   
   // handle search from api
   const handleSearch = () => {
@@ -66,17 +68,14 @@ export default function App() {
   // load 10 random results from api
   // Function to load random recipes
   function loadRandomRecipes() {
-   
     fetch(
-      `https://api.edamam.com/search?q=random&app_id=${apiId}&app_key=${apiKey}&from=0&to=2`
+      `https://api.edamam.com/search?q=random&app_id=${apiId}&app_key=${apiKey}&from=0&to=${numOfResults}`
     )
       .then((res) => res.json())
       .then((data) => {
         // randomise results
-        const randomRecipes = data.hits.sort(() => Math.random() - 1)
-        setRecipesData(randomRecipes);
-        
-        // setRecipesData(data.hits);
+        const randomRecipes = data.hits.sort(() => Math.random() - 0.5);
+        setRandomRecipesData(randomRecipes);
       })
       .catch((error) => {
         console.log('Fetch Error:', error);
@@ -96,7 +95,8 @@ export default function App() {
 
   return (
     <>
-      <h1>Recipe Finder</h1>
+      <nav>SpoonFed</nav>
+      <h1 className='title'>Recipe Finder</h1>
       <span>It's okay to be spoonfed.</span>
       
       <div className='search'>  
@@ -106,7 +106,7 @@ export default function App() {
           type="text"
           value={searchIngredients}
           onChange={(e) => setSearchIngredients(e.target.value)}
-          placeholder="Enter ingredients (comma-separated)"
+          placeholder="Enter ingredients"
         />
         
         <button onClick={handleSearch}>Search</button>
@@ -155,7 +155,7 @@ export default function App() {
   
           <div>
 
-            {recipesData.map((recipe) => (
+            {randomRecipesData.map((recipe) => (
               <div key={recipe.recipe.uri}>
                 <img src={recipe.recipe.image} alt={recipe.recipe.label} />
                 <h3>{recipe.recipe.label}</h3>
