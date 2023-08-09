@@ -16,7 +16,6 @@ type Recipe = {
       yield: number;
       cuisineType: string;
     }
- 
 }
 
 export default function App() {
@@ -95,7 +94,7 @@ export default function App() {
 
   return (
     <>
-      <nav>SpoonFed</nav>
+    
       <h1 className='title'>Recipe Finder</h1>
       <span>It's okay to be spoonfed.</span>
       
@@ -140,21 +139,14 @@ export default function App() {
                 <button onClick={() => getRecipeInstructions(recipe.recipe.url)}>Get Instructions</button>
               </div>
             ))}
-
-          
-
           </div>
         )}
-
       </div>
 
-      
-
+      {/* recipe caurosel recommendations */}
       <div className='random-results'>
         <p>Random Results</p>
-  
           <div>
-
             {randomRecipesData.map((recipe) => (
               <div key={recipe.recipe.uri}>
                 <img src={recipe.recipe.image} alt={recipe.recipe.label} />
@@ -162,7 +154,29 @@ export default function App() {
               </div>
             ))}
           </div>
-      
+      </div>
+
+      {/* Cuisines */}
+      {/* <p>Indian</p>
+      <p>Middle Eastern</p>
+      <p>Asian</p>
+      <p>American</p>
+      <p>Mexican</p>
+      <p>Mediterranean</p>
+      <p>Nordic</p>
+      <p>Italian</p> */}
+
+      {/* quick picks */}
+      <div className='quick-picks'>
+        <p>Chicken</p>
+        <p>Beef</p>
+        <p>Fish</p>
+        <p>Pork</p>
+        <p>Vegetarian</p>
+        <p>Pasta</p>
+        <p>Vegan</p>
+        <p>Gluten Free</p>
+
       </div>
 
     </>
