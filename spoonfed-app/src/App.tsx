@@ -24,6 +24,7 @@ export default function App() {
   const [recipesData, setRecipesData] = useState<Recipe[]>([]) 
   const [randomRecipesData, setRandomRecipesData] = useState<Recipe[]>([])
   const [foodTypes, setFoodTypes] = useState<Recipe[]>([])
+  const [foodTypesNumResults, setFoodTypesNumResults] = useState(5)
   const [searchIngredients, setSearchIngredients] = useState('')
   const [numOfResults, setNumOfResults] = useState(10)
 
@@ -87,10 +88,10 @@ export default function App() {
   }, []);
 
   // handle pre-set food-type filtering
-  function loadFoodTypes() {
+  function loadFoodTypes(foodType: string) {
     setLoading(true)
     fetch (
-      `https://api.edamam.com/search?q=chicken&app_id=${apiId}&app_key=${apiKey}&from=0&to=${numOfResults}`
+      `https://api.edamam.com/search?q=${foodType}&app_id=${apiId}&app_key=${apiKey}&from=0&to=${foodTypesNumResults}`
     )
       .then((res) => {
         if (!res.ok) {
@@ -108,10 +109,42 @@ export default function App() {
       })
   }
 
-  useEffect(() => {
-    loadFoodTypes();
-  })
+  // useEffect(() => {
+  //   loadFoodTypes();
+  // }, [ foodTypesNumResults ]);
 
+  function closeFoodTypes() {
+    setFoodTypes([])
+  }
+
+  // click handlers for different food types
+  function handleChickenClick() {
+    loadFoodTypes('chicken')
+  }
+
+  function handleBeefClick() {
+    loadFoodTypes('beef')
+  }
+
+  function handleFishClick() {
+    loadFoodTypes('fish')
+  }
+
+  function handlePorkClick() {
+    loadFoodTypes('pork')
+  }
+
+  function handleVegetarianClick() {
+    loadFoodTypes('vegetarian')
+  }
+
+  function handleVeganClick() {
+    loadFoodTypes('vegan')
+  }
+
+  function handleGlutenFreeClick() {
+    loadFoodTypes('gluten free')
+  }
 
 
   // get full recipe instructions from recipe source website
@@ -141,7 +174,7 @@ export default function App() {
 
         <br/>
         {/* fetch and map through recipe data */}
-        {loading ? (
+        {/* {loading ? (
           <p>Loading...</p>
         ) : (
           <div className='results'>
@@ -168,10 +201,10 @@ export default function App() {
             ))}
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* recipe caurosel recommendations */}
-      <div className='random-results'>
+      {/* <div className='random-results'>
         <p>Random Results</p>
           <div>
             {randomRecipesData.map((recipe) => (
@@ -181,19 +214,70 @@ export default function App() {
               </div>
             ))}
           </div>
+      </div> */}
       </div>
 
 
       {/* quick picks */}
       <div className='quick-picks'>
-        <button onClick={loadFoodTypes}><p>Chicken</p></button>
-        <p>Beef</p>
-        <p>Fish</p>
-        <p>Pork</p>
+        <button onClick={handleChickenClick} style={{cursor: 'pointer'}}>
+          <p>Chicken</p>
+        </button>
+
+        <button onClick={handleBeefClick} style={{cursor: 'pointer'}}>
+          <p>Beef</p>
+        </button>
+
+        <button onClick={handleFishClick} style={{cursor: 'pointer'}}>
+          <p>Fish</p>
+        </button>
+
+        <button onClick={handlePorkClick} style={{cursor: 'pointer'}}>
+          <p>Pork</p>
+        </button>
+
+        <button onClick={handleVegetarianClick} style={{cursor: 'pointer'}}>
+          <p>Vegetarian</p>
+        </button>
+
+        <button onClick={handleVeganClick} style={{cursor: 'pointer'}}>
+          <p>Vegan</p>
+        </button>
+
+        <button onClick={handleGlutenFreeClick} style={{cursor: 'pointer'}}>
+          <p>Gluten Free</p>
+        </button>
+
+
+        {/* render selected food type results */}
+        { loading ? (
+          <p>Loading...</p>
+        ) : (
+          foodTypes.map((recipe) => (
+            <div key={recipe.recipe.uri} className='quick-picks-results'>
+              <img src={recipe.recipe.image} alt={recipe.recipe.label} />
+              <h3>{recipe.recipe.label}</h3>
+            </div>
+             
+          ))
+          
+        )}
+
+        {/* conditionally render when quick-picks-results is open, remove when not */}
+        {foodTypes.length > 0 ? (
+          <button onClick={closeFoodTypes}>Close</button>
+        ) : (
+          <div></div>
+        )}
+
+      
+
+
+        {/* 
         <p>Vegetarian</p>
         <p>Pasta</p>
         <p>Vegan</p>
-        <p>Gluten Free</p>
+        <p>Gluten Free</p> */}
       </div>
 
     </>
