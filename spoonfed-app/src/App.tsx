@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Search from './components/Search'
+import Recommendations from './components/Recommendations'
 import './App.css'
 
 // custom type definition for recipe data
@@ -22,11 +23,8 @@ type Recipe = {
 export default function App() {
 
   const [loading, setLoading] = useState(false)
-  const [randomRecipesData, setRandomRecipesData] = useState<Recipe[]>([])
   const [foodTypes, setFoodTypes] = useState<Recipe[]>([])
   const [foodTypesNumResults, setFoodTypesNumResults] = useState(5)
-
-  const [numOfResults, setNumOfResults] = useState(10)
 
   const apiId = '9b922e44'
   const apiKey = 'ef7943312809a8647c2d59f53e28994f'
@@ -34,28 +32,7 @@ export default function App() {
   // const apiKey = import.meta.env.VITE_API_KEY
 
   
- 
 
-  // load 10 random results from api
-  // Function to load random recipes
-  function loadRandomRecipes() {
-    fetch(
-      `https://api.edamam.com/search?q=random&app_id=${apiId}&app_key=${apiKey}&from=0&to=${numOfResults}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        // randomise results
-        const randomRecipes = data.hits.sort(() => Math.random() - 0.5);
-        setRandomRecipesData(randomRecipes);
-      })
-      .catch((error) => {
-        console.log('Fetch Error:', error);
-      });
-  }
-
-  useEffect(() => {
-    loadRandomRecipes();
-  }, []);
 
   // handle pre-set food-type filtering
   function loadFoodTypes(foodType: string) {
@@ -125,20 +102,8 @@ export default function App() {
   return (
     <>
       <Search />
-    
+      <Recommendations />
 
-      {/* recipe caurosel recommendations */}
-      <div className='random-results'>
-        <p>Random Results</p>
-          <div>
-            {randomRecipesData.map((recipe) => (
-              <div key={recipe.recipe.uri}>
-                <img src={recipe.recipe.image} alt={recipe.recipe.label} />
-                <h3>{recipe.recipe.label}</h3>
-              </div>
-            ))}
-          </div>
-      </div>
       
 
 
