@@ -170,11 +170,12 @@ export default function App() {
         
         <button onClick={handleSearch}>Search</button>
         <br />
-        <button onClick={loadMore}>Get More</button>
+
+        
 
         <br/>
         {/* fetch and map through recipe data */}
-        {/* {loading ? (
+        {loading ? (
           <p>Loading...</p>
         ) : (
           <div className='results'>
@@ -200,11 +201,18 @@ export default function App() {
               </div>
             ))}
           </div>
+
         )}
-      </div> */}
+
+      {/* conditionally render 'load more' button if search results are greater than 10 */}
+      { recipesData.length >= 10 ? (
+          <button onClick={loadMore}>Load More</button>
+        ) : <></>}
+      
+      </div>
 
       {/* recipe caurosel recommendations */}
-      {/* <div className='random-results'>
+      <div className='random-results'>
         <p>Random Results</p>
           <div>
             {randomRecipesData.map((recipe) => (
@@ -214,8 +222,8 @@ export default function App() {
               </div>
             ))}
           </div>
-      </div> */}
       </div>
+      
 
 
       {/* quick picks */}
@@ -257,6 +265,7 @@ export default function App() {
             <div key={recipe.recipe.uri} className='quick-picks-results'>
               <img src={recipe.recipe.image} alt={recipe.recipe.label} />
               <h3>{recipe.recipe.label}</h3>
+              <button onClick={() => getRecipeInstructions(recipe.recipe.url)}>Get Instructions</button>
             </div>
              
           ))
