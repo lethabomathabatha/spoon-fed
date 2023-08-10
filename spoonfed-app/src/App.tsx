@@ -23,6 +23,7 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [recipesData, setRecipesData] = useState<Recipe[]>([]) 
   const [randomRecipesData, setRandomRecipesData] = useState<Recipe[]>([])
+  const [foodTypes, setFoodTypes] = useState<Recipe[]>([])
   const [searchIngredients, setSearchIngredients] = useState('')
   const [numOfResults, setNumOfResults] = useState(10)
 
@@ -84,6 +85,32 @@ export default function App() {
   useEffect(() => {
     loadRandomRecipes();
   }, []);
+
+  // handle pre-set food-type filtering
+  function loadFoodTypes() {
+    setLoading(true)
+    fetch (
+      `https://api.edamam.com/search?q=chicken&app_id=${apiId}&app_key=${apiKey}&from=0&to=${numOfResults}`
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch! status: ${res.status}`)
+        }  
+        return res.json()
+      })
+      .then((data) => {
+        setFoodTypes(data.hits);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log('Fetch Error:', error)
+        setLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    loadFoodTypes();
+  })
 
 
 
@@ -156,19 +183,10 @@ export default function App() {
           </div>
       </div>
 
-      {/* Cuisines */}
-      {/* <p>Indian</p>
-      <p>Middle Eastern</p>
-      <p>Asian</p>
-      <p>American</p>
-      <p>Mexican</p>
-      <p>Mediterranean</p>
-      <p>Nordic</p>
-      <p>Italian</p> */}
 
       {/* quick picks */}
       <div className='quick-picks'>
-        <p>Chicken</p>
+        <button onClick={loadFoodTypes}><p>Chicken</p></button>
         <p>Beef</p>
         <p>Fish</p>
         <p>Pork</p>
@@ -176,7 +194,6 @@ export default function App() {
         <p>Pasta</p>
         <p>Vegan</p>
         <p>Gluten Free</p>
-
       </div>
 
     </>
