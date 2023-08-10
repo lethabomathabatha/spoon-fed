@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../App.css'
 
+
 // custom type definition for recipe data
 type Recipe = {
     key: string;
@@ -79,6 +80,7 @@ export default function Search() {
           value={searchIngredients}
           onChange={(e) => setSearchIngredients(e.target.value)}
           placeholder="Enter ingredients"
+          className="h-10 w-30 border-2 border-black rounded p-2"
         />
         
         <button onClick={handleSearch}>Search</button>

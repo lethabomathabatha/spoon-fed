@@ -2,5 +2,15 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0rem;
-  text-align: center;
+  /* text-align: center; */
+  --orange: #FF9900;
+  --white: #fff;
+}
+
+body {
+  background-color: var(--white);
+}
+
+.recipe-image {
+  width: 100%;
 }
