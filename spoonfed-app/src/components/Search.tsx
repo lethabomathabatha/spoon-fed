@@ -30,6 +30,7 @@ export default function Search() {
   const [searchIngredients, setSearchIngredients] = useState('')
   const [numOfResults, setNumOfResults] = useState(4)
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState<number | null>(null);
+  const [searchClicked, setSearchClicked] = useState(false)
 
   const apiId = '9b922e44'
   const apiKey = 'ef7943312809a8647c2d59f53e28994f'
@@ -55,6 +56,7 @@ export default function Search() {
       .then((data) => {
         setRecipesData(data.hits);
         setLoading(false);
+        setSearchClicked(true)
       })
       .catch((error) => {
         console.log('Fetch Error:', error)
@@ -71,9 +73,6 @@ export default function Search() {
 
   // display selected recipe's overlay
   function toggleRecipeOverlay(recipeIndex: number | null) {
-    if (selectedRecipeIndex === recipeIndex) {
-      setSelectedRecipeIndex(null)
-    } else {
     setSelectedRecipeIndex(recipeIndex);
   }
 
@@ -86,7 +85,9 @@ export default function Search() {
 
   // time-based greeting message
   const [greetingIcon, setGreetingIcon] = useState(<SunIcon className="h-4 w-4"/>)
-  const greetingRef = useRef<string>(''); // Create a ref to store the greeting
+
+  // using useRef vs regular variable stores the greeting without forcing too many re-renders
+  const greetingRef = useRef<string>(''); 
 
   useEffect(() => {
     const time = new Date().getHours();
@@ -133,8 +134,14 @@ export default function Search() {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <div className='pt-8 p-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5'>
-            {recipesData.map((recipe, recipeIndex) => (
+          <>
+          {searchClicked && searchIngredients && (
+            <p>Results for "{searchIngredients}"</p>
+          )}
+            
+            <div className='pt-8 p-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+           
+            {recipesData.map((recipe) => (
               <div 
                 key={recipe.recipe.uri} 
                 className='flex flex-col border-2 border-black p-3 rounded-2xl mt-10 bg-slate-50'>
@@ -162,7 +169,7 @@ export default function Search() {
 
                 <div className='flex items-center justify-center gap-1'>
                   <button
-                    onClick={() => toggleRecipeOverlay(recipeIndex)}
+                    //  onClick={openRecipeOverlay}
                     className='border-2 border-black rounded-2xl p-2 text-xs mt-0 bg-slate-200 cursor-pointer '
                   >View Recipe</button>
                   <HeartIcon className='h-5 w-5'/>
@@ -174,6 +181,7 @@ export default function Search() {
               </div>
             ))}
           </div>
+          </>
 
         )}
 
@@ -185,19 +193,6 @@ export default function Search() {
         ) : <></>}
       
       </div>
-
-      {/* overlay for selected recipe */}
-      {selectedRecipeIndex === recipeIndex && (
-        <div className='recipe-overlay'>
-            <h2>{selectedRecipeIndex.recipe.label}</h2>
-           <h4>Ingredients:</h4> 
-           <ul>
-            {recipe.recipe.ingredients.map((ingredient, recipeIndex) => (
-              <li key={recipeIndex}>{ingredient.text}</li>
-            ))} 
-            </ul>
-        </div>
-      )}
 
     </>
   )
