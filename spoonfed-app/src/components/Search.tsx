@@ -192,8 +192,9 @@ export default function Search() {
 
         {/* overlay */}
       {isOverlayOpen && selectedRecipeIndex !== null && (
-        <div className='flex flex-col  border-2 border-black p-0 rounded-2xl absolute top-20 ml-10 mr-10 translate-y-50 bg-white' >
-          <div className='flex flex-grow'>
+        <div className='fixed border-2 border-black p-0 rounded-2xl top-20 left-1/2 transform -translate-x-1/2  max-w-md w-4/5 translate-y-50 bg-white' >
+          {/* fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-md w-full p-4 rounded-2xl border-2 border-black bg-white */}
+          <div className='relative'>
             <img 
               src={recipesData[selectedRecipeIndex]?.recipe.image} 
               alt={recipesData[selectedRecipeIndex]?.recipe.label} 
@@ -203,7 +204,7 @@ export default function Search() {
             <HeartIcon className=' w-10 fill-white top-50 right-0 absolute translate-y-60 -translate-x-0 border-black rounded-md p-1 '/>
           </div>
           <h2 className='text-lg font-semibold rounded-xl bg-white shadow-md p-2 mb-2 '>{recipesData[selectedRecipeIndex]?.recipe.label} </h2>
-          <h2 className='flex justify-center text-lg font-semibold gap-1'><UserGroupIcon className='w-7'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
+          <h2 className='flex justify-center text-lg font-semibold gap-1'><UserGroupIcon className='w-6'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
           <h2 className='text-lg font-semibold'>Instructions</h2>
           {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
             <li key={index}>{ingredient.text}</li>
