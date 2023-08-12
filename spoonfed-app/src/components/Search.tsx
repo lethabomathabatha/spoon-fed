@@ -89,9 +89,9 @@ export default function Search() {
 
 
   // get full recipe instructions from recipe source website
-  // const getRecipeInstructions = (url: string) => {
-  //   window.open(url, '_blank')
-  // }
+  const getRecipeInstructions = (url: string) => {
+    window.open(url, '_blank')
+  }
 
   // time-based greeting message
   const [greetingIcon, setGreetingIcon] = useState(<SunIcon className="h-4 w-4"/>)
@@ -163,13 +163,8 @@ export default function Search() {
                 <div className='flex flex-col flex-grow'>
                   <p className='text-xs font-normal relative top-0 transform -translate-y-5'>{recipe.recipe.source}</p>
                   <p className='text-s font-bold '>{recipe.recipe.label}</p>
-                  {/* <h2>serves: {recipe.recipe.yield}</h2> */}
-
-                  {/* <h4>Ingredients:</h4> */}
+      
                   <ul>
-                    {/* {recipe.recipe.ingredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient.text}</li>
-                    ))} */}
                     {recipe.recipe.totalTime === 0 ? (null) 
                       : 
                     (<p className='text-xs flex items-center gap-1 justify-center p-1'><ClockIcon className='h-5 w-5'/>{recipe.recipe.totalTime}min </p>)}
@@ -197,7 +192,7 @@ export default function Search() {
 
         {/* overlay */}
       {isOverlayOpen && selectedRecipeIndex !== null && (
-        <div className='flex flex-col  border-2 border-black p-0 rounded-2xl absolute top-20 translate-y-50 bg-white' >
+        <div className='flex flex-col  border-2 border-black p-0 rounded-2xl absolute top-20 ml-10 mr-10 translate-y-50 bg-white' >
           <div className='flex flex-grow'>
             <img 
               src={recipesData[selectedRecipeIndex]?.recipe.image} 
@@ -205,6 +200,7 @@ export default function Search() {
               className=' rounded-t-xl w-full '
             />
             <ArrowDownLeftIcon onClick={closeRecipeOverlay} className='top-0 right-0 absolute translate-y-2 -translate-x-2 bg-black text-white w-8 border-2 border-black rounded-md p-1 '/>
+            <HeartIcon className=' w-10 fill-white top-50 right-0 absolute translate-y-60 -translate-x-0 border-black rounded-md p-1 '/>
           </div>
           <h2 className='text-lg font-semibold rounded-xl bg-white shadow-md p-2 mb-2 '>{recipesData[selectedRecipeIndex]?.recipe.label} </h2>
           <h2 className='flex justify-center text-lg font-semibold gap-1'><UserGroupIcon className='w-7'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
@@ -213,6 +209,10 @@ export default function Search() {
             <li key={index}>{ingredient.text}</li>
           ))}
           
+          <button 
+            onClick={() => getRecipeInstructions(recipesData[selectedRecipeIndex]?.recipe.url)}
+            className='border-2 border-black rounded-2xl p-2 m-4 bg-slate-50'
+            >Get Instructions</button>
          {/* recipe instructions: */}
 
           {/* {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
