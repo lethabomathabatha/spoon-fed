@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { ClockIcon } from '@heroicons/react/24/solid'
+import { HeartIcon } from '@heroicons/react/24/outline'
 
 // custom type definition for recipe data
 type Recipe = {
@@ -64,20 +66,43 @@ export default function Recommendations() {
     <>
       {/* recipe caurosel recommendations */}
       <div className='random-results'>
-        <p>Random Results</p>
+        <p>Want to try something new?</p>
           <div>
             { loading ? (
               <div>Loading...</div>
             ) : (
-                <>
-                {randomRecipesData.map((recipe) => (
-                <div key={recipe.recipe.uri}>
-                    <img src={recipe.recipe.image} alt={recipe.recipe.label} />
-                    <h3>{recipe.recipe.label}</h3>
-                    <button onClick={() => getRecipeInstructions(recipe.recipe.url)}>Instructions</button>
+                <div className='p-8 flex flex-row gap-5 overflow-x-scroll'>
+                
+                  {randomRecipesData.map((recipe) => (
+                  <div key={recipe.recipe.uri} className='flex flex-col border-2 border-black p-3 rounded-2xl mt-10 bg-slate-50'>
+                      <img 
+                        src={recipe.recipe.image} 
+                        alt={recipe.recipe.label} 
+                        className='border-2 border-black rounded-xl relative top-10 transform -translate-y-20 bg-slate-50'
+                      />
+                      <div className='flex flex-col flex-grow'>
+                    <p className='text-xs font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
+                    <p className='text-s font-bold text-center capitalize'>{recipe.recipe.label}</p>
+        
+                    <ul>
+                      {recipe.recipe.totalTime === 0 ? (null) 
+                        : 
+                      (<p className='text-xs flex items-center gap-1 justify-center p-1'><ClockIcon className='h-5 w-5'/>{recipe.recipe.totalTime}min </p>)}
+                    </ul>
+                  </div>
+                  
+                  <div className='flex items-center justify-center gap-1'>
+                    <button
+                      // onClick={() => openRecipeOverlay(index)}
+                      className='border-2 border-black rounded-2xl p-2 text-xs mt-0 bg-slate-200 cursor-pointer '
+                    > View Recipe</button>
+                    <HeartIcon className='h-5 w-5'/>
+                  </div>    
+                  
+                  
+                  </div>
+                  ))}
                 </div>
-                ))}
-                </>
             )}
             
           </div>
