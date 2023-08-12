@@ -34,6 +34,7 @@ export default function Search() {
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState<number | null>(null);
   const [searchClicked, setSearchClicked] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+  const [isBackgroundDimmed, setIsBackgroundDimmed] = useState(false)
 
   const apiId = '9b922e44'
   const apiKey = 'ef7943312809a8647c2d59f53e28994f'
@@ -78,12 +79,13 @@ export default function Search() {
   function openRecipeOverlay(recipeIndex: number | null) {
     setSelectedRecipeIndex(recipeIndex);
     setIsOverlayOpen(true)
-    console.log('open', recipeIndex)
+    setIsBackgroundDimmed(true)
   }
 
   function closeRecipeOverlay() {
     setSelectedRecipeIndex(null)
     setIsOverlayOpen(false)
+    setIsBackgroundDimmed(false)
   }
 
 
@@ -119,11 +121,10 @@ export default function Search() {
   return (
     <>
     
-      <div className='search'>  
-
-        <div className='.flex-column p-8' >
-          <span className='flex '>{greetingRef.current}{greetingIcon}</span>
-          <span className='flex '>Let's find you something tasty to make!</span>
+      <div className='search'>    
+        <div className='.flex-column p-4 ' >
+          <span className='flex justify-center font-semibold'>{greetingRef.current}{greetingIcon}</span>
+          <span className='justify-center '>Let's find you something tasty to make!</span>
         </div>
 
 
@@ -136,7 +137,7 @@ export default function Search() {
             placeholder="Enter ingredients"
             className="h-10 w-full  border-2 border-black rounded-3xl p-4 bg-slate-50 shadow-sm"
           /> 
-          <MagnifyingGlassIcon className="h-5 " onClick={handleSearch}/>
+          <MagnifyingGlassIcon className="h-5 curs" onClick={handleSearch}/>
         </div>
       
 
@@ -145,8 +146,9 @@ export default function Search() {
           <p>Loading...</p>
         ) : (
           <>
+          
           {searchClicked && searchIngredients && (
-            <p>Results for <strong>"{searchIngredients}"</strong></p>
+            <p className='pt-2 text-center'>Results for <strong>"{searchIngredients}"</strong></p>
           )}
             
             <div className='pt-8 p-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5'>
@@ -161,8 +163,8 @@ export default function Search() {
                   className='border-2 border-black rounded-2xl relative top-10 transform -translate-y-20 bg-slate-50   '/>
                 
                 <div className='flex flex-col flex-grow'>
-                  <p className='text-xs font-normal relative top-0 transform -translate-y-5'>{recipe.recipe.source}</p>
-                  <p className='text-s font-bold '>{recipe.recipe.label}</p>
+                  <p className='text-xs font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
+                  <p className='text-s font-bold text-center capitalize'>{recipe.recipe.label}</p>
       
                   <ul>
                     {recipe.recipe.totalTime === 0 ? (null) 
@@ -179,21 +181,28 @@ export default function Search() {
                   > View Recipe</button>
                   <HeartIcon className='h-5 w-5'/>
                 </div>
-                {/* <button 
-                  onClick={() => getRecipeInstructions(recipe.recipe.url)}
-                  className='border-2 border-black rounded-2xl p-2 mt-2 bg-slate-50'
-                >Get Instructions</button> */}
               </div>
             ))}
           </div>
+          
+          
           </>
 
         )}
-
-        {/* overlay */}
+         {/* conditionally render 'load more' button if search results are greater than 4*/}
+        { recipesData.length >= 4 ? (
+          <button onClick={loadMore}
+          className='border-2 border-black rounded-xl p-2 text-s m-2 bg-slate-200 cursor-pointer '
+          >Load More</button>
+        ) : <></>}
+  
+        
+        {/* dimming background when overlay is active */}
+        {isBackgroundDimmed && <div className='bg-black opacity-50 fixed inset-0 w-full' ></div>}
+       
+       {/* overlay */}
       {isOverlayOpen && selectedRecipeIndex !== null && (
-        <div className='fixed border-2 border-black p-0 rounded-2xl top-20 left-1/2 transform -translate-x-1/2  max-w-md w-4/5 translate-y-50 bg-white' >
-          {/* fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-md w-full p-4 rounded-2xl border-2 border-black bg-white */}
+        <div className='absolute border-2 border-black p-0 rounded-2xl top-20 left-1/2 transform -translate-x-1/2  max-w-md w-4/5 translate-y-50 bg-white ' >
           <div className='relative'>
             <img 
               src={recipesData[selectedRecipeIndex]?.recipe.image} 
@@ -201,18 +210,18 @@ export default function Search() {
               className=' rounded-t-xl w-full '
             />
             <ArrowDownLeftIcon onClick={closeRecipeOverlay} className='top-0 right-0 absolute translate-y-2 -translate-x-2 bg-black text-white w-8 border-2 border-black rounded-md p-1 '/>
-            <HeartIcon className=' w-10 fill-white top-50 right-0 absolute translate-y-60 -translate-x-0 border-black rounded-md p-1 '/>
+            {/* <HeartIcon className=' w-10 fill-white top-1/2 right-0 absolute translate-y-50 -translate-x-0 border-black rounded-md p-1 '/> */}
           </div>
-          <h2 className='text-lg font-semibold rounded-xl bg-white shadow-md p-2 mb-2 '>{recipesData[selectedRecipeIndex]?.recipe.label} </h2>
-          <h2 className='flex justify-center text-lg font-semibold gap-1'><UserGroupIcon className='w-6'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
-          <h2 className='text-lg font-semibold'>Instructions</h2>
+          <h2 className='flex flex-row justify-center gap-3 text-lg font-semibold rounded-xl bg-white shadow-md p-2 mb-2 '>{recipesData[selectedRecipeIndex]?.recipe.label} <HeartIcon className='w-6' /> </h2>
+          <h2 className='flex justify-center text-md font-semibold gap-1'><UserGroupIcon className='w-6'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
+          <h2 className='text-lg font-semibold text-center'>Instructions</h2>
           {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
-            <li key={index}>{ingredient.text}</li>
+            <li key={index} className='text-center pl-1 pr-1'>{ingredient.text}</li>
           ))}
           
           <button 
             onClick={() => getRecipeInstructions(recipesData[selectedRecipeIndex]?.recipe.url)}
-            className='border-2 border-black rounded-2xl p-2 m-4 bg-slate-50'
+            className=' border-2 border-black rounded-2xl p-2 m-4 bg-slate-50 cursor-pointer '
             >Get Instructions</button>
          {/* recipe instructions: */}
 
@@ -224,12 +233,11 @@ export default function Search() {
         </div>
       )}
 
-      {/* conditionally render 'load more' button if search results are greater than 4*/}
-      { recipesData.length >= 4 ? (
-          <button onClick={loadMore}
-          className='border-2 border-black rounded-xl p-2 text-s m-2 bg-slate-200 cursor-pointer '
-          >Load More</button>
-        ) : <></>}
+     
+      
+      
+      
+      
       
       </div>
 
