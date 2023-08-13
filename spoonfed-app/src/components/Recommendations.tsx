@@ -23,6 +23,11 @@ export default function Recommendations() {
 
   const [loading, setLoading] = useState(false)
   const [randomRecipesData, setRandomRecipesData] = useState<Recipe[]>([])
+  const [selectedRecipeIndex, setSelectedRecipeIndex] = useState<number | null>(null);
+
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+  const [isBackgroundDimmed, setIsBackgroundDimmed] = useState(false)
+
   const apiId = '9b922e44'
   const apiKey = 'ef7943312809a8647c2d59f53e28994f'
   // const apiId = import.meta.env.VITE_API_ID
@@ -55,6 +60,13 @@ export default function Recommendations() {
     loadRandomRecipes();
   }, []);
 
+  // display selected recipe's overlay
+  function openRecipeOverlay(recipeIndex: number | null) {
+    setSelectedRecipeIndex(recipeIndex);
+    setIsOverlayOpen(true)
+    setIsBackgroundDimmed(true)
+  }
+
 
 
   // get full recipe instructions from recipe source website
@@ -67,30 +79,30 @@ export default function Recommendations() {
       {/* recipe caurosel recommendations */}
       <div className='random-results'>
         <p>Want to try something new?</p>
-          <div>
+          <div className='pt-8 p-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5'>
             { loading ? (
               <div>Loading...</div>
             ) : (
-                <div className='p-8 flex flex-row gap-5 overflow-x-scroll'>
+                <div className=''>
                 
                   {randomRecipesData.map((recipe) => (
-                  <div key={recipe.recipe.uri} className='flex flex-col border-2 border-black p-3 rounded-2xl mt-10 bg-slate-50'>
+                  <div key={recipe.recipe.uri} className='flex flex-col border-2 border-black p-3 rounded-2xl mt-10 bg-slate-50 '>
                       <img 
                         src={recipe.recipe.image} 
                         alt={recipe.recipe.label} 
                         className='border-2 border-black rounded-xl relative top-10 transform -translate-y-20 bg-slate-50'
                       />
-                      <div className='flex flex-col flex-grow'>
-                    <p className='text-xs font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
-                    <p className='text-s font-bold text-center capitalize'>{recipe.recipe.label}</p>
-        
-                    <ul>
-                      {recipe.recipe.totalTime === 0 ? (null) 
-                        : 
-                      (<p className='text-xs flex items-center gap-1 justify-center p-1'><ClockIcon className='h-5 w-5'/>{recipe.recipe.totalTime}min </p>)}
-                    </ul>
-                  </div>
-                  
+                      <div className='flex flex-col flex-grow '>
+                        <p className='text-xs font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
+                        <p className='text-s font-bold text-center capitalize'>{recipe.recipe.label}</p>
+            
+                        <ul>
+                          {recipe.recipe.totalTime === 0 ? (null) 
+                            : 
+                          (<p className='text-xs flex items-center gap-1 justify-center p-1'><ClockIcon className='h-5 w-5'/>{recipe.recipe.totalTime}min </p>)}
+                        </ul>
+                      </div>
+                      
                   <div className='flex items-center justify-center gap-1'>
                     <button
                       // onClick={() => openRecipeOverlay(index)}
