@@ -44,7 +44,6 @@ export default function Search() {
   
   // handle search from api
   const handleSearch = () => {
-    console.log(import.meta.env.VITE_API_KEY);
     setLoading(true);
     setNumOfResults(4);
     const searchQuery = `${searchIngredients}`
