@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.eslintrc.cjs
 tailwind.config.js
 postcss.config.js
 
