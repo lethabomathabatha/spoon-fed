@@ -14,3 +14,38 @@ body {
 .recipe-image {
   width: 100%;
 }
+
+@media (max-width: 640px) {
+  .fixed {
+    width: calc(100% - 50%); /* Adjust the margin as needed */
+    margin: 0px; /* Adjust the margin as needed */
+    
+
+
+
+  }
+}
+
+.recommendations-display {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1rem;
+  padding: 1rem;  
+  
+}
+
+.recommendations-card {
+
+}
+
+
+.recommendations-card-image {
+  
+}
+
+
+.recommendations-card-label {
+  
+}

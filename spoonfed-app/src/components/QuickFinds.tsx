@@ -24,10 +24,9 @@ export default function QuickFinds() {
   const [foodTypes, setFoodTypes] = useState<Recipe[]>([])
 //   const [foodTypesNumResults, setFoodTypesNumResults] = useState(5)
 
-  const apiId = '9b922e44'
-  const apiKey = 'ef7943312809a8647c2d59f53e28994f'
-  // const apiId = import.meta.env.VITE_API_ID
-  // const apiKey = import.meta.env.VITE_API_KEY
+
+  const apiId = import.meta.env.VITE_API_ID
+  const apiKey = import.meta.env.VITE_API_KEY
 
   // handle pre-set food-type filtering
   function loadFoodTypes(foodType: string) {
