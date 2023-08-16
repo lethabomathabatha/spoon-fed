@@ -7,6 +7,7 @@ import { ClockIcon } from '@heroicons/react/24/outline'
 import { HeartIcon } from '@heroicons/react/24/outline'
 import { ArrowDownLeftIcon } from '@heroicons/react/24/outline'
 import { UserGroupIcon } from '@heroicons/react/24/outline'
+// import RecipeOverlay from './RecipeOverlay'
 
 // custom type definition for recipe data
 type Recipe = {
@@ -36,15 +37,14 @@ export default function Search() {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [isBackgroundDimmed, setIsBackgroundDimmed] = useState(false)
 
-  const apiId = '9b922e44'
-  const apiKey = 'ef7943312809a8647c2d59f53e28994f'
-  // const apiId = import.meta.env.VITE_API_ID
-  // const apiKey = import.meta.env.VITE_API_KEY
+  const apiId = import.meta.env.VITE_API_ID
+  const apiKey = import.meta.env.VITE_API_KEY
 
   
   
   // handle search from api
   const handleSearch = () => {
+    console.log(import.meta.env.VITE_API_KEY);
     setLoading(true);
     setNumOfResults(4);
     const searchQuery = `${searchIngredients}`
@@ -67,6 +67,7 @@ export default function Search() {
         setLoading(false)
       })
   };
+
 
   // load more recipes
   function loadMore() {
@@ -134,10 +135,11 @@ export default function Search() {
             type="text"
             value={searchIngredients}
             onChange={(e) => setSearchIngredients(e.target.value)}
+            
             placeholder="Enter ingredients"
             className="h-10 w-full  border-2 border-black rounded-3xl p-4 bg-slate-50 shadow-sm"
           /> 
-          <MagnifyingGlassIcon className="h-5 curs" onClick={handleSearch}/>
+          <MagnifyingGlassIcon className="h-5 cursor-pointer" onClick={handleSearch}/>
         </div>
       
 
@@ -216,7 +218,7 @@ export default function Search() {
           <h2 className='flex justify-center text-md font-semibold gap-1'><UserGroupIcon className='w-6'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
           <h2 className='text-lg font-semibold text-center'>Instructions</h2>
           {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
-            <li key={index} className='text-center pl-1 pr-1'>{ingredient.text}</li>
+            <li key={index} className='text-center pl-3 pr-3'>{ingredient.text}</li>
           ))}
           
           <button 
