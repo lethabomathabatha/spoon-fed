@@ -1,4 +1,4 @@
-## It's Okay to be SpoonFed
+## It's Okay to be SpoonFed 👩‍🍳
 
 Do you have ingredients in your kitchen but have no cooking clue what to put together with them? Well, here's SpoonFed to the rescue.
 
