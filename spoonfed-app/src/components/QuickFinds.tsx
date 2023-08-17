@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import '../App.css'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 
 // custom type definition for recipe data
 type Recipe = {
@@ -79,8 +80,8 @@ export default function QuickFinds() {
     loadFoodTypes('vegetarian')
   }
 
-  function handleVeganClick() {
-    loadFoodTypes('vegan')
+  function handleRiceClick() {
+    loadFoodTypes('rice')
   }
 
   function handleGlutenFreeClick() {
@@ -96,32 +97,33 @@ export default function QuickFinds() {
   return (
     <>
       {/* quick picks */}
-      <div className='quick-picks'>
-        <button onClick={handleChickenClick} style={{cursor: 'pointer'}}>
-          <p>Chicken</p>
-        </button>
+      <div className='flex flex-row gap-8 m-8  overflow-hidden  overflow-x-visible'>
+        <div onClick={handleChickenClick} className=" flex flex-col items-center cursor-pointer  border-2 border-black rounded-3xl  ">
+          <img src='chicken.png' className='sm:w-max md:w-3/6 lg:w-2/4 ' /> 
+          <p className=''>Chicken</p>
+        </div>
 
-        <button onClick={handleBeefClick} style={{cursor: 'pointer'}}>
+        <button onClick={handleBeefClick} className="cursor-pointer">
           <p>Beef</p>
         </button>
 
-        <button onClick={handleFishClick} style={{cursor: 'pointer'}}>
+        <button onClick={handleFishClick} className="cursor-pointer">
           <p>Fish</p>
         </button>
 
-        <button onClick={handlePorkClick} style={{cursor: 'pointer'}}>
+        <button onClick={handlePorkClick} className="cursor-pointer">
           <p>Pork</p>
         </button>
 
-        <button onClick={handleVegetarianClick} style={{cursor: 'pointer'}}>
+        <button onClick={handleVegetarianClick} className="cursor-pointer">
           <p>Vegetarian</p>
         </button>
 
-        <button onClick={handleVeganClick} style={{cursor: 'pointer'}}>
-          <p>Vegan</p>
+        <button onClick={handleRiceClick}  className="cursor-pointer">
+          <p>Rice</p>
         </button>
 
-        <button onClick={handleGlutenFreeClick} style={{cursor: 'pointer'}}>
+        <button onClick={handleGlutenFreeClick} className="cursor-pointer">
           <p>Gluten Free</p>
         </button>
 
@@ -143,7 +145,8 @@ export default function QuickFinds() {
 
         {/* conditionally render when quick-picks-results is open, remove when not */}
         {foodTypes.length > 0 ? (
-          <button onClick={closeFoodTypes}>Close</button>
+          // <button onClick={closeFoodTypes}>Close</button>
+          <XMarkIcon onClick={closeFoodTypes} className='w-14'/>
         ) : (
           null
         )}
