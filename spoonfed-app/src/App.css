@@ -11,20 +11,20 @@ body {
   background-color: var(--white);
 }
 
-.recipe-image {
+/* .recipe-image {
   width: 100%;
-}
+} */
 
-@media (max-width: 640px) {
+/* @media (max-width: 640px) {
   .fixed {
     width: calc(100% - 50%); /* Adjust the margin as needed */
-    margin: 0px; /* Adjust the margin as needed */
+    /* margin: 0px; Adjust the margin as needed */
     
 
 
 
-  }
-}
+  /* }
+}  */
 
 .recommendations-display {
   display: flex;
@@ -36,16 +36,3 @@ body {
   
 }
 
-.recommendations-card {
-
-}
-
-
-.recommendations-card-image {
-  
-}
-
-
-.recommendations-card-label {
-  
-}
