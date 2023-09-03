@@ -157,11 +157,11 @@ export default function Search() {
             {recipesData.map((recipe, index) => (
               <div 
                 key={recipe.recipe.uri} 
-                className='flex flex-col border-2 border-black p-3 rounded-2xl mt-10 bg-slate-50'>
+                className='flex flex-col border-2 border-black p-3 rounded-2xl mt-10 bg-slate-50 flex-grow'>
                 <img 
                   src={recipe.recipe.image} 
                   alt={recipe.recipe.label} 
-                  className='border-2 border-black rounded-2xl relative top-10 transform -translate-y-20 bg-slate-50   '/>
+                  className='border-2 border-black rounded-2xl relative top-10 w-1/2 transform -translate-y-20 bg-slate-50   '/>
                 
                 <div className='flex flex-col flex-grow'>
                   <p className='text-xs font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
