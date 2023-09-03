@@ -123,22 +123,22 @@ export default function Search() {
     
       <div className='search'>    
         <div className='.flex-column p-4 ' >
-          <span className='flex justify-center font-semibold'>{greetingRef.current}{greetingIcon}</span>
-          <span className='justify-center '>Let's find you something tasty to make!</span>
+          <span className='flex justify-center font-semibold lg:text-2xl'>{greetingRef.current}{greetingIcon}</span>
+          <span className='justify-center lg:text-2xl'>Let's find you something tasty to make!</span>
         </div>
 
 
         {/* search bar for ingredients */}
         <div className='flex .flex-row p-0 justify-center items-center gap-2  ml-8 mr-8 '>
           <input
-            type="text"
+            type="text "
             value={searchIngredients}
             onChange={(e) => setSearchIngredients(e.target.value)}
             
             placeholder="Enter ingredients"
-            className="h-10 w-full  border-2 border-black rounded-3xl p-4 bg-slate-50 shadow-sm"
+            className="h-10 w-full lg:h-1/3 lg:w-full  border-2 border-black rounded-3xl p-4 bg-slate-50 shadow-sm lg:text-xl"
           /> 
-          <MagnifyingGlassIcon className="h-5 cursor-pointer" onClick={handleSearch}/>
+          <MagnifyingGlassIcon className="h-5 cursor-pointer lg:h-8" onClick={handleSearch}/>
         </div>
       
 
@@ -149,28 +149,28 @@ export default function Search() {
           <>
           
           {searchClicked && searchIngredients && (
-            <p className='pt-2 text-center'>Results for <strong>"{searchIngredients}"</strong></p>
+            <p className='pt-2 text-center lg:text-2xl'>Results for <strong>"{searchIngredients}"</strong></p>
           )}
             
-            <div className='pt-8 p-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+            <div className='pt-8 p-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10'>
            
             {recipesData.map((recipe, index) => (
               <div 
                 key={recipe.recipe.uri} 
-                className='flex flex-col border-2 border-black p-3 rounded-2xl mt-10 bg-slate-50 flex-grow'>
+                className='flex flex-col p-3 custom-shadow rounded-2xl mt-20 bg-slate-50 flex-grow border-2 border-black'>
                 <img 
                   src={recipe.recipe.image} 
                   alt={recipe.recipe.label} 
-                  className='border-2 border-black rounded-2xl relative top-10 w-1/2 transform -translate-y-20 bg-slate-50   '/>
-                
+                  className='custom-shadow border-2 border-black rounded-2xl relative top-5 mx-auto w-3/4 transform -translate-y-20 bg-slate-50   '/>
+
                 <div className='flex flex-col flex-grow'>
-                  <p className='text-xs font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
-                  <p className='text-s font-bold text-center capitalize'>{recipe.recipe.label}</p>
+                  <p className='text-xs lg:text-2xl font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
+                  <p className='text-s lg:text-3xl font-bold text-center capitalize'>{recipe.recipe.label}</p>
       
                   <ul>
                     {recipe.recipe.totalTime === 0 ? (null) 
                       : 
-                    (<p className='text-xs flex items-center gap-1 justify-center p-1'><ClockIcon className='h-5 w-5'/>{recipe.recipe.totalTime}min </p>)}
+                    (<p className='text-xs lg:text-2xl flex items-center gap-1 justify-center p-1'><ClockIcon className='h-5 w-5 lg:h-8 lg:w-8'/>{recipe.recipe.totalTime}min </p>)}
                     
                   </ul>
                 </div>
@@ -178,9 +178,9 @@ export default function Search() {
                 <div className='flex items-center justify-center gap-1'>
                   <button
                     onClick={() => openRecipeOverlay(index)}
-                    className='border-2 border-black rounded-2xl p-2 text-xs mt-0 bg-slate-200 cursor-pointer '
+                    className='border-2 border-black rounded-2xl p-2 text-xs lg:text-2xl mt-0 lg:m-3 bg-slate-200 cursor-pointer '
                   > View Recipe</button>
-                  <HeartIcon className='h-5 w-5'/>
+                  <HeartIcon className='h-5 w-5 lg:w-8 lg:h-8'/>
                 </div>
               </div>
             ))}

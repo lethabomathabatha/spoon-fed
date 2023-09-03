@@ -72,11 +72,11 @@ export default function RecipeOverlay(
         
                
         {/* dimming background when overlay is active */}
-        {isBackgroundDimmed && <div className='bg-black opacity-50 fixed inset-0 w-full' ></div>}
+        {isBackgroundDimmed && <div className='bg-black opacity-50 fixed inset-0 w-full ' ></div>}
        
        {/* overlay */}
       {isOverlayOpen && selectedRecipeIndex !== null && (
-        <div className='absolute border-2 border-black p-0 rounded-2xl top-20 left-1/2 transform -translate-x-1/2  max-w-md w-4/5 translate-y-50 bg-white ' >
+        <div className='absolute border-2 border-black p-0 custom-shadow rounded-2xl top-20 left-1/2 transform -translate-x-1/2  max-w-md w-4/5 translate-y-50 bg-white ' >
           <div className='relative'>
             <img 
               src={recipesData[selectedRecipeIndex]?.recipe.image} 
