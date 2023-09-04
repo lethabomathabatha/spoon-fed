@@ -144,7 +144,7 @@ export default function Search() {
 
         {/* fetch and map through recipe data */}
         {loading ? (
-          <p>Loading...</p>
+          <p className='lg:text-2xl'>Loading...</p>
         ) : (
           <>
           
@@ -165,7 +165,7 @@ export default function Search() {
 
                 <div className='flex flex-col flex-grow'>
                   <p className='text-xs lg:text-2xl font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
-                  <p className='text-s lg:text-3xl font-bold text-center capitalize'>{recipe.recipe.label}</p>
+                  <p className='text-s lg:text-2xl font-bold text-center capitalize'>{recipe.recipe.label}</p>
       
                   <ul>
                     {recipe.recipe.totalTime === 0 ? (null) 
@@ -178,7 +178,7 @@ export default function Search() {
                 <div className='flex items-center justify-center gap-1'>
                   <button
                     onClick={() => openRecipeOverlay(index)}
-                    className='border-2 border-black rounded-2xl p-2 text-xs lg:text-2xl mt-0 lg:m-3 bg-slate-200 cursor-pointer '
+                    className='border-2 border-black rounded-2xl p-2 text-xs lg:text-2xl mt-0 lg:m-3 bg-slate-200 cursor-pointer hover:bg-black hover:text-white'
                   > View Recipe</button>
                   <HeartIcon className='h-5 w-5 lg:w-8 lg:h-8'/>
                 </div>
@@ -193,7 +193,7 @@ export default function Search() {
          {/* conditionally render 'load more' button if search results are greater than 4*/}
         { recipesData.length >= 4 ? (
           <button onClick={loadMore}
-          className='border-2 border-black rounded-xl p-2 text-s m-2 bg-slate-200 cursor-pointer '
+          className='border-2 border-black rounded-xl p-2 text-s lg:text-2xl m-2 bg-slate-200 cursor-pointer '
           >Load More</button>
         ) : <></>}
   

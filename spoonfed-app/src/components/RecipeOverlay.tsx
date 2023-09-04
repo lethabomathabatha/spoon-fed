@@ -83,10 +83,10 @@ export default function RecipeOverlay(
               alt={recipesData[selectedRecipeIndex]?.recipe.label} 
               className=' rounded-t-xl w-full '
             />
-            <ArrowDownLeftIcon onClick={closeRecipeOverlay} className='top-0 right-0 absolute translate-y-2 -translate-x-2 bg-black text-white w-8 border-2 border-black rounded-md p-1 '/>
+            <ArrowDownLeftIcon onClick={closeRecipeOverlay} className='top-0 right-0 absolute translate-y-2 -translate-x-2 bg-black text-white w-8 border-2 border-black rounded-md p-1 cursor-pointer hover:bg-slate-300'/>
             {/* <HeartIcon className=' w-10 fill-white top-1/2 right-0 absolute translate-y-50 -translate-x-0 border-black rounded-md p-1 '/> */}
           </div>
-          <h2 className='flex flex-row justify-center gap-3 text-lg font-semibold rounded-xl bg-white shadow-md p-2 mb-2 '>{recipesData[selectedRecipeIndex]?.recipe.label} <HeartIcon className='w-6' /> </h2>
+          <h2 className='flex flex-row justify-center gap-3 text-lg lg:text-xl font-semibold rounded-xl bg-white shadow-md p-2 mb-2 '>{recipesData[selectedRecipeIndex]?.recipe.label} <HeartIcon className='w-6' /> </h2>
           <h2 className='flex justify-center text-md font-semibold gap-1'><UserGroupIcon className='w-6'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
           <h2 className='text-lg font-semibold text-center'>Instructions</h2>
           {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
@@ -95,7 +95,7 @@ export default function RecipeOverlay(
           
           <button 
             onClick={() => getRecipeInstructions(recipesData[selectedRecipeIndex]?.recipe.url)}
-            className=' border-2 border-black rounded-2xl p-2 m-4 bg-slate-50 cursor-pointer '
+            className=' border-2 border-black rounded-2xl lg:text-2xl p-2 m-4 bg-slate-50 cursor-pointer hover:bg-black hover:text-white '
             >Get Instructions</button>
          {/* recipe instructions: */}
 
