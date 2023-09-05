@@ -99,21 +99,21 @@ export default function Recommendations() {
 
   return (
     <div className=''>
-      <p>Want to try something new?</p>
+      <p className='lg:text-2xl'>Want to try something new?</p>
       {loading ? (
-        <div>Loading...</div>
+        <div className='lg:text-xl'>Loading...</div>
       ) : (
-        <div className='flex flex-row gap-4 p-4 overflow-hidden flex-grow  overflow-x-visible'>
+        <div className='flex flex-row gap-10 p-4 overflow-hidden flex-grow  overflow-x-visible'>
           {randomRecipesData.map((recipe) => (
-              <div key={recipe.recipe.uri} className='flex border-2 border-black p-3 rounded-2xl bg-slate-50'>
+              <div key={recipe.recipe.uri} className='flex flex-col p-3 custom-shadow rounded-2xl mt-20 bg-slate-50 flex-grow border-2 border-black'>
               <img
                 src={recipe.recipe.image}
                 alt={recipe.recipe.label}
-                className='border-2 border-black rounded-xl w-32 h-32 object-cover'
+                className=' custom-shadow border-2 border-black rounded-2xl relative top-5 mx-auto w-3/4 transform -translate-y-20 bg-slate-50   '
               />
-              <div className='flex flex-row mt-0 justify-between'>
-                <p className='text-xs font-normal text-center capitalize'>{recipe.recipe.source}</p>
-                <p className='text-s font-bold text-center capitalize'>{recipe.recipe.label}</p>
+              <div className='flex flex-col flex-grow'>
+                <p className='text-xs lg:text-2xl font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
+                <p className='text-s lg:text-2xl font-bold text-center capitalize'>{recipe.recipe.label}</p>
                 <ul>
                   {recipe.recipe.totalTime === 0 ? null : (
                     <p className='text-xs flex items-center gap-1 justify-center p-1'>
@@ -123,10 +123,10 @@ export default function Recommendations() {
                 </ul>
               </div>
               <div className='flex items-center justify-center mt-2'>
-                <button className='border-2 border-black rounded-2xl p-2 text-xs bg-slate-200 cursor-pointer'>
+                <button className='border-2 border-black rounded-2xl p-2 text-xs lg:text-2xl mt-0 lg:m-3 bg-slate-200 cursor-pointer hover:bg-black hover:text-white'>
                   View Recipe
                 </button>
-                <HeartIcon className='h-5 w-5 ml-2' />
+                <HeartIcon className='h-5 w-5 ml-2 lg:w-8 lg:h-8' />
               </div>
             </div>
           ))}
