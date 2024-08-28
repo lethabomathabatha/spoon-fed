@@ -93,7 +93,7 @@ export default function Recommendations() {
   // }
 
   // get full recipe instructions from recipe source website
-  // const getRecipeInstructions = (url: string) => {
+  // const getRecipeInstructions = (url: string) =>   {
   //   window.open(url, '_blank')
   // }
 
@@ -103,17 +103,18 @@ export default function Recommendations() {
       {loading ? (
         <div className='lg:text-xl'>Loading...</div>
       ) : (
-        <div className='flex flex-row gap-10 p-4 overflow-hidden flex-grow  overflow-x-visible'>
+        <div className='flex flex-col lg:flex-row md:flex-row gap-2 lg:gap-10 md:gap-10 p-8 lg:p-4 md:p-4 overflow-hidden flex-grow  overflow-x-visible'>
           {randomRecipesData.map((recipe) => (
               <div key={recipe.recipe.uri} className='flex flex-col p-3 custom-shadow rounded-2xl mt-20 bg-slate-50 flex-grow border-2 border-black'>
               <img
                 src={recipe.recipe.image}
                 alt={recipe.recipe.label}
-                className=' custom-shadow border-2 border-black rounded-2xl relative top-5 mx-auto w-3/4 transform -translate-y-20 bg-slate-50   '
+                className=' custom-shadow border-2 border-black rounded-2xl relative top-5 mx-auto object-cover w-3/4 transform -translate-y-20 bg-slate-50   '
+                
               />
               <div className='flex flex-col flex-grow'>
-                <p className='text-xs lg:text-2xl font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
-                <p className='text-s lg:text-2xl font-bold text-center capitalize'>{recipe.recipe.label}</p>
+                <p className='text-xs lg:text-lg font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
+                <p className='text-xs lg:text-lg font-bold text-center capitalize'>{recipe.recipe.label}</p>
                 <ul>
                   {recipe.recipe.totalTime === 0 ? null : (
                     <p className='text-xs flex items-center gap-1 justify-center p-1'>
@@ -123,7 +124,7 @@ export default function Recommendations() {
                 </ul>
               </div>
               <div className='flex items-center justify-center mt-2'>
-                <button className='border-2 border-black rounded-2xl p-2 text-xs lg:text-2xl mt-0 lg:m-3 bg-slate-200 cursor-pointer hover:bg-black hover:text-white'>
+                <button className='border-2 border-black rounded-2xl p-1 text-xs lg:text-lg mt-0 lg:m-3 bg-slate-200 cursor-pointer hover:bg-black hover:text-white'>
                   View Recipe
                 </button>
                 <HeartIcon className='h-5 w-5 ml-2 lg:w-8 lg:h-8' />

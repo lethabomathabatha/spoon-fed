@@ -161,7 +161,9 @@ export default function Search() {
                 <img 
                   src={recipe.recipe.image} 
                   alt={recipe.recipe.label} 
-                  className='custom-shadow border-2 border-black rounded-2xl relative top-5 mx-auto w-3/4 transform -translate-y-20 bg-slate-50   '/>
+                  className='custom-shadow border-2 border-black rounded-2xl relative top-5 mx-auto w-3/4 transform -translate-y-20 bg-slate-50'
+                  style=''
+                  />
 
                 <div className='flex flex-col flex-grow'>
                   <p className='text-xs lg:text-2xl font-normal relative top-0 transform -translate-y-5 text-center capitalize'>{recipe.recipe.source}</p>
