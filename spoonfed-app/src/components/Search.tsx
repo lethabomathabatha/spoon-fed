@@ -16,7 +16,7 @@ type Recipe = {
       uri: string;
       label: string;
       image: string;
-      ingredients: string[];
+      ingredients: { text: string }[];
       url: string;
       thumbnailImages: string[];
       totalTime: number;
@@ -31,7 +31,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false)
   const [recipesData, setRecipesData] = useState<Recipe[]>([]) 
   const [searchIngredients, setSearchIngredients] = useState('')
-  const [numOfResults, setNumOfResults] = useState(4)
+  const [numOfResults, setNumOfResults] = useState(3)
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState<number | null>(null);
   const [searchClicked, setSearchClicked] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
@@ -39,13 +39,11 @@ export default function Search() {
 
   const apiId = import.meta.env.VITE_API_ID
   const apiKey = import.meta.env.VITE_API_KEY
-
-  
   
   // handle search from api
   const handleSearch = () => {
     setLoading(true);
-    setNumOfResults(4);
+    setNumOfResults(3);
     const searchQuery = `${searchIngredients}`
     fetch(
       `https://api.edamam.com/search?q=${searchQuery}&app_id=${apiId}&app_key=${apiKey}&from=0&to=${numOfResults}`
@@ -57,6 +55,7 @@ export default function Search() {
         return res.json()
       })
       .then((data) => {
+        console.log(data);
         setRecipesData(data.hits);
         setLoading(false);
         setSearchClicked(true)
@@ -71,7 +70,7 @@ export default function Search() {
   // load more recipes
   function loadMore() {
     setLoading(true)
-    setNumOfResults((prevResults => prevResults + 4))
+    setNumOfResults((prevResults => prevResults + 3))
     handleSearch()
   }
 
@@ -87,8 +86,6 @@ export default function Search() {
     setIsOverlayOpen(false)
     setIsBackgroundDimmed(false)
   }
-
-
 
   // get full recipe instructions from recipe source website
   const getRecipeInstructions = (url: string) => {
@@ -120,7 +117,6 @@ export default function Search() {
 
   return (
     <>
-    
       <div className='search'>    
         <div className='.flex-column p-4 ' >
           <span className='flex justify-center font-semibold lg:text-2xl'>{greetingRef.current}{greetingIcon}</span>
@@ -162,7 +158,7 @@ export default function Search() {
                   src={recipe.recipe.image} 
                   alt={recipe.recipe.label} 
                   className='custom-shadow border-2 border-black rounded-2xl relative top-5 mx-auto w-3/4 transform -translate-y-20 bg-slate-50'
-                  style=''
+                  style={{ objectFit: 'cover' }}
                   />
 
                 <div className='flex flex-col flex-grow'>
@@ -186,14 +182,12 @@ export default function Search() {
                 </div>
               </div>
             ))}
-          </div>
-          
-          
+          </div>         
           </>
 
         )}
-         {/* conditionally render 'load more' button if search results are greater than 4*/}
-        { recipesData.length >= 4 ? (
+         {/* conditionally render 'load more' button if search results are greater than 3*/}
+        { recipesData.length >= 3 ? (
           <button onClick={loadMore}
           className='border-2 border-black rounded-xl p-2 text-s lg:text-2xl m-2 bg-slate-200 cursor-pointer '
           >Load More</button>
@@ -217,7 +211,7 @@ export default function Search() {
           </div>
           <h2 className='flex flex-row justify-center gap-3 text-lg font-semibold rounded-xl bg-white shadow-md p-2 mb-2 '>{recipesData[selectedRecipeIndex]?.recipe.label} <HeartIcon className='w-6' /> </h2>
           <h2 className='flex justify-center text-md font-semibold gap-1'><UserGroupIcon className='w-6'/> {recipesData[selectedRecipeIndex]?.recipe.yield}</h2>
-          <h2 className='text-lg font-semibold text-center'>Instructions</h2>
+          <h2 className='text-lg font-semibold text-center'>Ingredients</h2>
           {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
             <li key={index} className='text-center pl-3 pr-3'>{ingredient.text}</li>
           ))}
@@ -226,26 +220,16 @@ export default function Search() {
             onClick={() => getRecipeInstructions(recipesData[selectedRecipeIndex]?.recipe.url)}
             className=' border-2 border-black rounded-2xl p-2 m-4 bg-slate-50 cursor-pointer '
             >Get Instructions</button>
-         {/* recipe instructions: */}
+         {/* recipe instructions:
 
-          {/* {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
+          {recipesData[selectedRecipeIndex]?.recipe.ingredients.map((ingredient, index) => (
           <li key={index}>{ingredient.text}</li>
-          ))}*/}
+          ))} */}
          
          
         </div>
       )}
-
-     
-      
-      
-      
-      
-      
       </div>
-
-      
-
     </>
   )
 }
